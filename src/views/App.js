@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
-import {bindActionCreators} from 'redux';
+import {bindActionCreators, createStore} from 'redux';
 import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import {createTransitionHook} from '../universalRouter';
@@ -33,12 +33,7 @@ const meta = {
   }
 };
 
-@connect(
-    state => ({}),
-    dispatch => bindActionCreators({}, dispatch))
 export default class App extends Component {
-  static propTypes = {
-  }
 
   static contextTypes = {
     router: PropTypes.object.isRequired,
@@ -56,20 +51,6 @@ export default class App extends Component {
     );
   }
 
-  // handleLogout(event) {
-  //   event.preventDefault();
-  //   this.props.logout();
-  // }
-
-  // static fetchData(store) {
-  //   const promises = [];
-  //   if (!isInfoLoaded(store.getState())) {
-  //     promises.push(store.dispatch(loadInfo()));
-  //   }
-  //   if (!isAuthLoaded(store.getState())) {
-  //     promises.push(store.dispatch(loadAuth()));
-  //   }
-  //   return Promise.all(promises);
-  // }
 }
+
 
