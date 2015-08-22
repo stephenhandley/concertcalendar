@@ -19,9 +19,12 @@ function selectTodos(todos, filter) {
 }
 
 function select(state) {
+  // state = { todos: { visibilityFilter: 'SHOW_ALL', todos: [] } }
+  const {visibilityFilter, todos} = state.todos;
+
   return {
-    visibleTodos: selectTodos(state.todos, state.visibilityFilter),
-    visibilityFilter: state.visibilityFilter
+    visibleTodos: selectTodos(todos, visibilityFilter),
+    visibilityFilter: visibilityFilter
   };
 }
 
