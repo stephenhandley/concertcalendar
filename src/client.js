@@ -8,6 +8,7 @@ import ApiClient from './ApiClient';
 import universalRouter from './universalRouter';
 const history = new BrowserHistory();
 const client = new ApiClient();
+import 'todomvc-app-css/index.css';
 
 const dest = document.getElementById('content');
 const store = createStore(client, window.__data);

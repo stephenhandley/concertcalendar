@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-// import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import { addTodo, completeTodo, setVisibilityFilter, } from '../actions/todoActions';
+import * as TodoActions from '../actions/todoActions';
 import { VisibilityFilters } from  '../actions/actionTypes';
-import AddTodo from '../components/AddTodo';
+import Header from '../components/Header';
 import TodoList from '../components/TodoList';
 import Footer from '../components/Footer';
 
@@ -11,15 +11,15 @@ function selectTodos(todos, filter) {
   switch (filter) {
   case VisibilityFilters.SHOW_ALL:
     return todos;
-  case VisibilityFilters.SHOW_COMPLETED:
-    return todos.filter(todo => todo.completed);
-  case VisibilityFilters.SHOW_ACTIVE:
-    return todos.filter(todo => !todo.completed);
+  case VisibilityFilters.SHOW_COMPLETE:
+    return todos.filter(todo => todo.complete);
+  case VisibilityFilters.SHOW_INCOMPLETE:
+    return todos.filter(todo => !todo.complete);
   }
 }
 
 function select(state) {
-  // state = { todos: { visibilityFilter: 'SHOW_ALL', todos: [] } }
+  // state = { todos: { visibilityFilter: 'SHOW_ALL', visibleTodos: [] } }
   const {visibilityFilter, todos} = state.todos;
 
   return {
@@ -43,24 +43,41 @@ class Home extends Component {
   }
 
   render() {
-    const { dispatch, visibleTodos, visibilityFilter } = this.props;
+    const { dispatch, visibleTodos, visibilityFilter} = this.props;
+    const incompleteCount = visibleTodos.filter(todo => !todo.complete).length;
+    const completeCount = visibleTodos.filter(todo => todo.complete).length
+
+    let boundActions = bindActionCreators(TodoActions, dispatch);
+    const {
+      deleteTodo,
+      deleteCompletedTodos,
+      createTodo,
+      editTodo,
+      toggleTodo,
+      toggleAllTodos,
+      setVisibilityFilter
+    } = boundActions;
 
     return (
-      <div>
-        <AddTodo
-          onAddClick={text =>
-            dispatch(addTodo(text))
-          } />
+      <div className="todoapp">
+        <Header
+          placeholder='What is to be done?'
+          createTodo={createTodo}
+        />
         <TodoList
           todos={visibleTodos}
-          onTodoClick={index =>
-            dispatch(completeTodo(index))
-          } />
+          toggleTodo={toggleTodo}
+          toggleAllTodos={toggleAllTodos}
+          deleteTodo={deleteTodo}
+          editTodo={editTodo}
+        />
         <Footer
+          incompleteCount={incompleteCount}
+          completeCount={completeCount}
+          deleteCompletedTodos={deleteCompletedTodos}
           filter={visibilityFilter}
-          onFilterChange={nextFilter =>
-            dispatch(setVisibilityFilter(nextFilter))
-          } />
+          onShow={setVisibilityFilter}
+        />
       </div>
     );
   }
