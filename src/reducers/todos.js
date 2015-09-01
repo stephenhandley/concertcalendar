@@ -31,7 +31,7 @@ function todos(state = [], action) {
         id: action.payload.id
       }];
 
-    case TOGGLE_TODO:
+    case TOGGLE_TODO: {
       let index = state.findIndex(todo => action.payload.id === todo.id);
 
       let todo = state[index];
@@ -44,8 +44,8 @@ function todos(state = [], action) {
         }),
         ...state.slice(index + 1)
       ]
-
-    case EDIT_TODO:
+    }
+    case EDIT_TODO: {
       let index = state.findIndex(todo => action.payload.id === todo.id);
       return [
         ...state.slice(0, index),
@@ -54,7 +54,7 @@ function todos(state = [], action) {
         }),
         ...state.slice(index + 1)
       ]
-
+    }
     case TOGGLE_ALL_TODOS:
       const allAreComplete = state.every(todo => todo.complete);
       return [...state.map(todo => ({...todo, complete: !allAreComplete }))];

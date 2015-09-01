@@ -16,14 +16,13 @@ export default function createApiClientStore(client, data) {
     finalCreateStore = applyMiddleware(middleware)(createStore);
   }
 
-  const reducer = combineReducers(require('../reducers/index'));
+  const reducer = combineReducers(require('../reducers'));
   const store = finalCreateStore(reducer, data);
   store.client = client;
 
-  if (module.hot) {
-    module.hot.accept('../reducers/index', () => {
-      const nextReducer = combineReducers(require('../reducers/index'));
-      store.replaceReducer(nextReducer);
+  if (__DEVELOPMENT__ && module.hot) {
+    module.hot.accept('../reducers', () => {
+      store.replaceReducer(combineReducers(require('../reducers')));
     });
   }
 
