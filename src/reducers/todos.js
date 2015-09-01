@@ -32,11 +32,14 @@ function todos(state = [], action) {
       }];
 
     case TOGGLE_TODO:
-      let completeStatus = !action.payload.todo.complete;
-      let index = state.findIndex(todo => action.payload.todo.id === todo.id);
+      let index = state.findIndex(todo => action.payload.id === todo.id);
+
+      let todo = state[index];
+      let completeStatus = !todo.complete;
+
       return [
         ...state.slice(0, index),
-        Object.assign({}, state[index], {
+        Object.assign({}, todo, {
           complete: completeStatus
         }),
         ...state.slice(index + 1)

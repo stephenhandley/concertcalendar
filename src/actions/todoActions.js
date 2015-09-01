@@ -13,17 +13,17 @@ export function createTodo(text) {
     return {
         type: CREATE_TODO,
         payload: {
-          text: text,
+          text,
           id: lodash.uniqueId()
         }
     }
 }
 
-export function toggleTodo (todo) {
+export function toggleTodo(id) {
   return {
     type: TOGGLE_TODO,
     payload: {
-      todo
+      id
     }
   };
 }
@@ -38,7 +38,7 @@ export function deleteTodo (id) {
   return {
     type: DELETE_TODO,
     payload: {
-      id: id
+      id
     }
   };
 }
@@ -53,8 +53,8 @@ export function editTodo (id, content) {
   return {
     type: EDIT_TODO,
     payload: {
-      id: id,
-      content: content
+      id,
+      content
     }
   };
 }

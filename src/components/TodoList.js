@@ -11,7 +11,7 @@ export default class TodosList extends Component {
     }
 
     toggleTodo(todo) {
-        this.props.toggleTodo(todo);
+        this.props.toggleTodo(todo.id);
     }
 
     deleteTodo(todo) {

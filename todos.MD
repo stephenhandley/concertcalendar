@@ -35,8 +35,14 @@ For the first step, we will do:
 
 After we've done this, we'll know how to turn user stories into running applications.
 
+## Workflows
 
-## User Story
+1. A user should be able to enter todos
+2. A user should be able to update or delete todos
+3. A user should be able to mark todos as complete
+4. A user should be able to sort todos by status
+
+## User Stories
 
 Let's use the reference implementation of TODO-MVC of [React](http://todomvc.com/examples/react/#/).
 
@@ -62,16 +68,20 @@ X. A user can delete todos
 # Actions
 
 ### ActionTypes (constant string)
+    - SET_VISIBILITY_FILTER
+
     - CREATE_TODO
     - TOGGLE_TODO
     - TOGGLE_ALL_TODOS
     - DELETE_TODO
     - DELETE_COMPLETED_TODOS
-    - EDIT_TODO
+    - EDIT_TODO    
 
 ## Actions (obj[function])
+    -setVisibilityFilter(filter)
+
     - createTodo(todo={})
-    - toggleTodo(todo)
+    - toggleTodo(id)
     - toggleAllTodos()
     - deleteTodo(id)
     - deleteCompletedTodos()

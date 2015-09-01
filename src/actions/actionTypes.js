@@ -1,8 +1,4 @@
-export const ADD_TODO = 'ADD_TODO';
-export const COMPLETE_TODO = 'COMPLETE_TODO';
-// ^^ removed
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
-// vv added
 export const CREATE_TODO = 'CREATE_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const TOGGLE_ALL_TODOS = 'TOGGLE_ALL_TODOS';
