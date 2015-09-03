@@ -40,4 +40,36 @@ describe('TodoItem', () => {
     });
   });
 
+  describe('events', () => {
+    let component;
+    let deleteTodoCallback;
+
+    beforeEach(() => {
+      deleteTodoCallback = () => {
+        // Typically we should use "sinon" here
+        deleteTodoCallback.called = true;
+      };
+      deleteTodoCallback.called = false;
+
+      component = TestUtils.renderIntoDocument(
+        <TodoItem
+          todo={mockedTodo}
+          editTodo={_.noop}
+          toggleTodo={_.noop}
+          deleteTodo={deleteTodoCallback}
+        />
+      );
+    });
+
+    it('should trigger deleteTodo', () => {
+      const buttonComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'button');
+
+      expect(deleteTodoCallback.called).toBe(false);
+
+      TestUtils.Simulate.click(React.findDOMNode(buttonComponent), 'click');
+
+      expect(deleteTodoCallback.called).toBe(true);
+    });
+  });
+
 });
