@@ -6,7 +6,7 @@ import {
   DELETE_COMPLETED_TODOS,
   EDIT_TODO,
   SET_VISIBILITY_FILTER,
-  TOGGLE_ALL_TODOS
+  MARK_COMPLETE_ALL_TODOS
 } from "./actionTypes";
 
 export function createTodo(text) {
@@ -28,9 +28,9 @@ export function toggleTodo(id) {
   };
 }
 
-export function toggleAllTodos() {
+export function markCompleteAllTodos() {
   return {
-    type: TOGGLE_ALL_TODOS
+    type: MARK_COMPLETE_ALL_TODOS
   };
 }
 

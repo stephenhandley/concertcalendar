@@ -18,8 +18,8 @@ export default class TodosList extends Component {
         this.props.deleteTodo(todo.id);
     }
 
-    toggleAllTodos() {
-        this.props.toggleAllTodos();
+    markCompleteAllTodos() {
+        this.props.markCompleteAllTodos();
     }
 
     renderToggleAll(completeCount) {
@@ -31,7 +31,7 @@ export default class TodosList extends Component {
             <input className='toggle-all'
                    type='checkbox'
                    checked={completeCount === todos.length}
-                   onChange={this.toggleAllTodos.bind(this)} />
+                   onChange={this.markCompleteAllTodos.bind(this)} />
           );
         }
     }

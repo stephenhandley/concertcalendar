@@ -72,7 +72,7 @@ X. A user can delete todos
 
     - CREATE_TODO
     - TOGGLE_TODO
-    - TOGGLE_ALL_TODOS
+    - MARK_COMPLETE_ALL_TODOS
     - DELETE_TODO
     - DELETE_COMPLETED_TODOS
     - EDIT_TODO    
@@ -82,7 +82,7 @@ X. A user can delete todos
 
     - createTodo(todo={})
     - toggleTodo(id)
-    - toggleAllTodos()
+    - markCompleteAllTodos()
     - deleteTodo(id)
     - deleteCompletedTodos()
     - editTodo(id, content)
@@ -97,7 +97,7 @@ X. A user can delete todos
     + todos.js
         + CREATE_TODO
         + TOGGLE_TODO
-        + TOGGLE_ALL_TODOS
+        + MARK_COMPLETE_ALL_TODOS
         + DELETE_TODO
         + DELETE_COMPLETED_TODOS
         + EDIT_TODO
@@ -112,9 +112,9 @@ X. A user can delete todos
     ---
     toggleTodo(todo) -actions-> App.js -> TodoList.js -> TodoItem.js (onChange event)
 
-    case TOGGLE_ALL_TODOS <-store- TOGGLE_ALL_TODOS <-view trigger-
+    case MARK_COMPLETE_ALL_TODOS <-store- MARK_COMPLETE_ALL_TODOS <-view trigger-
     ---
-    toggleAllTodos() -actions-> App.js -> TodoList.js (toggleAll onChange -> toggleAllTodos() [local])
+    markCompleteAllTodos() -actions-> App.js -> TodoList.js (toggleAll onChange -> markCompleteAllTodos() [local])
 
     case DELETE_TODO <-store- DELETE_TODO <-view trigger-
     ---

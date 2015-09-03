@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import {
   CREATE_TODO,
   TOGGLE_TODO,
-  TOGGLE_ALL_TODOS,
+  MARK_COMPLETE_ALL_TODOS,
   DELETE_TODO,
   DELETE_COMPLETED_TODOS,
   SET_VISIBILITY_FILTER,
@@ -55,7 +55,7 @@ function todos(state = [], action) {
         ...state.slice(index + 1)
       ]
     }
-    case TOGGLE_ALL_TODOS:
+    case MARK_COMPLETE_ALL_TODOS:
       const allAreComplete = state.every(todo => todo.complete);
       return [...state.map(todo => ({...todo, complete: !allAreComplete }))];
 
