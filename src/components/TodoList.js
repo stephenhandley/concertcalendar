@@ -49,6 +49,7 @@ export default class TodosList extends Component {
             <ul className="todo-list">
               {this.props.todos.map((todo, index) => <TodoItem
                 todo={todo}
+                key={todo.id}
                 toggleTodo={this.toggleTodo.bind(this, todo)}
                 editTodo={this.props.editTodo}
                 deleteTodo={this.deleteTodo.bind(this, todo)}

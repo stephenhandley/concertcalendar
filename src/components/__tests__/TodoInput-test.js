@@ -53,6 +53,28 @@ describe('TodoInput', () => {
       expect(React.findDOMNode(inputComponent).value).toBe("newValue");
     });
 
+    it(`should call onSave after a user presses enter in the input`, () => {
+
+      const onSaveStub = sinon.stub();
+
+      const component = TestUtils.renderIntoDocument(
+        <TodoInput
+          text = {mockedTodo.text}
+          editing = {false}
+          onSave = {onSaveStub}
+        />
+      );
+
+      const inputComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
+
+      expect(onSaveStub.called).toBe(false);
+
+      TestUtils.Simulate.keyDown(React.findDOMNode(inputComponent), {keyCode: 13});
+
+      expect(onSaveStub.called).toBe(true);
+
+    })
+
     context(`if the Todo is new (props.newTodo: true)`, () => {
 
       it(`shouldn't call onSave after a blur action`, () => {
@@ -74,6 +96,29 @@ describe('TodoInput', () => {
         TestUtils.Simulate.blur(React.findDOMNode(inputComponent));
 
         expect(onSaveStub.called).toBe(false);
+      });
+
+      it(`should clear the input after pressing enter`, () => {
+
+        const onSaveStub = sinon.stub();
+
+        const component = TestUtils.renderIntoDocument(
+          <TodoInput
+            text = {mockedTodo.text}
+            editing = {false}
+            newTodo = {true}
+            onSave = {onSaveStub}
+          />
+        );
+
+        const inputComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
+
+        expect(React.findDOMNode(inputComponent).value).toBe(mockedTodo.text);
+
+        TestUtils.Simulate.keyDown(React.findDOMNode(inputComponent), {keyCode: 13});
+
+        expect(React.findDOMNode(inputComponent).value).toBe('');
+
       });
 
     });
