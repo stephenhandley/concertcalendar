@@ -42,15 +42,9 @@ describe('TodoItem', () => {
 
   describe('events', () => {
     let component;
-    let deleteTodoCallback;
+    let deleteTodoCallback = sinon.stub();
 
     beforeEach(() => {
-      deleteTodoCallback = () => {
-        // Typically we should use "sinon" here
-        deleteTodoCallback.called = true;
-      };
-      deleteTodoCallback.called = false;
-
       component = TestUtils.renderIntoDocument(
         <TodoItem
           todo={mockedTodo}
