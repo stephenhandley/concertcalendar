@@ -5,6 +5,7 @@ export default class TodoInput extends Component {
 
   static propTypes = {
     text: PropTypes.string,
+    onSave: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     editing: PropTypes.bool,
     newTodo: PropTypes.bool
