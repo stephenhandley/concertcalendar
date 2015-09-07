@@ -34,20 +34,16 @@ describe('TodoInput', () => {
   });
 
   describe('events', () => {
-    let component;
 
-    beforeEach(() => {
-
-      component = TestUtils.renderIntoDocument(
+    it(`should update text from user input`, () => {
+      const component = TestUtils.renderIntoDocument(
         <TodoInput
           text = {mockedTodo.text}
           editing = {false}
           onSave = {_.noop}
         />
       );
-    });
 
-    it(`should update text from user input`, () => {
       const inputComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
 
       expect(React.findDOMNode(inputComponent).value).toBe(mockedTodo.text);
@@ -56,6 +52,57 @@ describe('TodoInput', () => {
 
       expect(React.findDOMNode(inputComponent).value).toBe("newValue");
     });
+
+    context(`if the Todo is new (props.newTodo: true)`, () => {
+
+      it(`shouldn't call onSave after a blur action`, () => {
+        const onSaveStub = sinon.stub();
+
+        const component = TestUtils.renderIntoDocument(
+          <TodoInput
+            text = {mockedTodo.text}
+            editing = {false}
+            newTodo = {true}
+            onSave = {onSaveStub}
+          />
+        );
+
+        const inputComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
+
+        expect(onSaveStub.called).toBe(false);
+
+        TestUtils.Simulate.blur(React.findDOMNode(inputComponent));
+
+        expect(onSaveStub.called).toBe(false);
+      });
+
+    });
+
+    context(`if the Todo isn't new (props.newTodo: false)`, () => {
+
+      it(`should call onSave after a blur action`, () => {
+        const onSaveStub = sinon.stub();
+
+        const component = TestUtils.renderIntoDocument(
+          <TodoInput
+            text = {mockedTodo.text}
+            editing = {false}
+            newTodo = {false}
+            onSave = {onSaveStub}
+          />
+        );
+
+        const inputComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
+
+        expect(onSaveStub.called).toBe(false);
+
+        TestUtils.Simulate.blur(React.findDOMNode(inputComponent));
+
+        expect(onSaveStub.called).toBe(true);
+      });
+
+    });
+
   });
 
 });
