@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import {
   CREATE_TODO,
-  TOGGLE_TODO,
-  MARK_COMPLETE_ALL_TODOS,
+  MARK_TODO_AS_COMPLETE,
+  MARK_ALL_TODOS_AS_COMPLETE,
   DELETE_TODO,
   DELETE_COMPLETED_TODOS,
   SET_VISIBILITY_FILTER,
@@ -31,7 +31,7 @@ function todos(state = [], action) {
         id: action.payload.id
       }];
 
-    case TOGGLE_TODO: {
+    case MARK_TODO_AS_COMPLETE: {
       let index = state.findIndex(todo => action.payload.id === todo.id);
 
       let todo = state[index];
@@ -55,7 +55,7 @@ function todos(state = [], action) {
         ...state.slice(index + 1)
       ]
     }
-    case MARK_COMPLETE_ALL_TODOS:
+    case MARK_ALL_TODOS_AS_COMPLETE:
       const allAreComplete = state.every(todo => todo.complete);
       return [...state.map(todo => ({...todo, complete: !allAreComplete }))];
 

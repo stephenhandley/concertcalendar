@@ -53,8 +53,8 @@ class Home extends Component {
       deleteCompletedTodos,
       createTodo,
       editTodo,
-      toggleTodo,
-      markCompleteAllTodos,
+      markTodoAsComplete,
+      markAllTodosAsComplete,
       setVisibilityFilter
     } = boundActions;
 
@@ -66,8 +66,8 @@ class Home extends Component {
         />
         <TodoList
           todos={visibleTodos}
-          toggleTodo={toggleTodo}
-          markCompleteAllTodos={markCompleteAllTodos}
+          markTodoAsComplete={markTodoAsComplete}
+          markAllTodosAsComplete={markAllTodosAsComplete}
           deleteTodo={deleteTodo}
           editTodo={editTodo}
         />

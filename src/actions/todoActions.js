@@ -1,12 +1,12 @@
 import * as lodash from 'lodash';
 import {
   CREATE_TODO,
-  TOGGLE_TODO,
+  MARK_TODO_AS_COMPLETE,
   DELETE_TODO,
   DELETE_COMPLETED_TODOS,
   EDIT_TODO,
   SET_VISIBILITY_FILTER,
-  MARK_COMPLETE_ALL_TODOS
+  MARK_ALL_TODOS_AS_COMPLETE
 } from "./actionTypes";
 
 export function createTodo(text) {
@@ -19,18 +19,18 @@ export function createTodo(text) {
     }
 }
 
-export function toggleTodo(id) {
+export function markTodoAsComplete(id) {
   return {
-    type: TOGGLE_TODO,
+    type: MARK_TODO_AS_COMPLETE,
     payload: {
       id
     }
   };
 }
 
-export function markCompleteAllTodos() {
+export function markAllTodosAsComplete() {
   return {
-    type: MARK_COMPLETE_ALL_TODOS
+    type: MARK_ALL_TODOS_AS_COMPLETE
   };
 }
 

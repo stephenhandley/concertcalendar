@@ -18,6 +18,7 @@ describe('TodoList', () => {
     id: 2
   }];
 
+
   describe('rendering', () => {
     let component;
 
@@ -26,7 +27,7 @@ describe('TodoList', () => {
         <TodoList
           todos={mockedTodos}
           editTodo={_.noop}
-          toggleTodo={_.noop}
+          markTodoAsComplete={_.noop}
           deleteTodo={_.noop}
         />
       );
@@ -38,44 +39,36 @@ describe('TodoList', () => {
       expect(sectionComponent).toExist();
     });
 
-    // it('should render text in label', () => {
-    //   const labelComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'label');
-
-    //   expect(labelComponent).toExist();
-    //   expect(React.findDOMNode(labelComponent).textContent).toEqual('abc123');
-    // });
   });
 
-  // describe('events', () => {
-  //   let component;
-  //   let deleteTodoCallback;
+  describe('events', () => {
+    let component;
 
-  //   beforeEach(() => {
-  //     deleteTodoCallback = () => {
-  //       // Typically we should use "sinon" here
-  //       deleteTodoCallback.called = true;
-  //     };
-  //     deleteTodoCallback.called = false;
+    beforeEach(() => {
+      const onDeleteStub = sinon.stub();
+      const onEditStub = sinon.stub();
+      const onMarkCompleteStub = sinon.stub();
 
-  //     component = TestUtils.renderIntoDocument(
-  //       <TodoItem
-  //         todo={mockedTodo}
-  //         editTodo={_.noop}
-  //         toggleTodo={_.noop}
-  //         deleteTodo={deleteTodoCallback}
-  //       />
-  //     );
-  //   });
+      component = TestUtils.renderIntoDocument(
 
-  //   it('should trigger deleteTodo', () => {
-  //     const buttonComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'button');
+        <TodoList
+          todos={mockedTodos}
+          editTodo={onEditStub}
+          markTodoAsComplete={onMarkCompleteStub}
+          deleteTodo={onDeleteStub}
+        />
+      );
+    });
 
-  //     expect(deleteTodoCallback.called).toBe(false);
+    it('should trigger deleteTodo', () => {
+      const buttonComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'button');
 
-  //     TestUtils.Simulate.click(React.findDOMNode(buttonComponent), 'click');
+      expect(onDeleteStub.called).toBe(false);
 
-  //     expect(deleteTodoCallback.called).toBe(true);
-  //   });
-  // });
+      TestUtils.Simulate.click(React.findDOMNode(buttonComponent), 'click');
+
+      expect(onDeleteStub.called).toBe(true);
+    });
+  });
 
 });

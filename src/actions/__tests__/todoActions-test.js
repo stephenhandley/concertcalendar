@@ -16,23 +16,23 @@ describe('actions', () => {
     expect(actualAction.payload.text).toEqual(expectedAction.payload.text);
   });
 
-  it('should create an action to toggle a todo', () => {
+  it('should create an action to markComplete a todo', () => {
     const id = 1;
     const expectedAction = {
-      type: types.TOGGLE_TODO,
+      type: types.MARK_TODO_AS_COMPLETE,
       payload: {
         id
       }
     };
-    const actualAction = actions.toggleTodo(id);
+    const actualAction = actions.markTodoAsComplete(id);
     expect(actualAction).toEqual(expectedAction);
   });
 
   it('should create an action to mark all todos as complete', () => {
     const expectedAction = {
-      type: types.MARK_COMPLETE_ALL_TODOS,
+      type: types.MARK_ALL_TODOS_AS_COMPLETE,
     };
-    const actualAction = actions.markCompleteAllTodos();
+    const actualAction = actions.markAllTodosAsComplete();
     expect(actualAction).toEqual(expectedAction);
   });
 

@@ -7,7 +7,7 @@ export default class TodoItem extends Component {
   static propTypes = {
     todo: PropTypes.object.isRequired,
     editTodo: PropTypes.func.isRequired,
-    toggleTodo: PropTypes.func.isRequired,
+    markTodoAsComplete: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired
   }
 
@@ -33,7 +33,7 @@ export default class TodoItem extends Component {
   }
 
   render() {
-    const {todo, toggleTodo, deleteTodo} = this.props;
+    const {todo, markTodoAsComplete, deleteTodo} = this.props;
     let element;
 
     if (this.state.editing) {
@@ -48,10 +48,10 @@ export default class TodoItem extends Component {
           <label onDoubleClick={this.handleDoubleClick.bind(this)}>
             {todo.text}
           </label>
-          <input className='toggle'
+          <input className='markComplete'
                  type='checkbox'
                  checked={todo.complete}
-                 onChange={() => toggleTodo(todo)} />
+                 onChange={() => markTodoAsComplete(todo)} />
           <button className='destroy'
                   onClick={() => deleteTodo(todo)} />
         </div>

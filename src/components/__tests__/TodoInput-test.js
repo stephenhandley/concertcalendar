@@ -53,7 +53,7 @@ describe('TodoInput', () => {
       expect(React.findDOMNode(inputComponent).value).toBe("newValue");
     });
 
-    it(`should call onSave after a user presses enter in the input`, () => {
+    it(`should update a todo after a user presses enter in the input`, () => {
 
       const onSaveStub = sinon.stub();
 
@@ -72,12 +72,11 @@ describe('TodoInput', () => {
       TestUtils.Simulate.keyDown(React.findDOMNode(inputComponent), {keyCode: 13});
 
       expect(onSaveStub.called).toBe(true);
-
     })
 
     context(`if the Todo is new (props.newTodo: true)`, () => {
 
-      it(`shouldn't call onSave after a blur action`, () => {
+      it(`shouldn't update the todo after a blur action`, () => {
         const onSaveStub = sinon.stub();
 
         const component = TestUtils.renderIntoDocument(
@@ -118,14 +117,12 @@ describe('TodoInput', () => {
         TestUtils.Simulate.keyDown(React.findDOMNode(inputComponent), {keyCode: 13});
 
         expect(React.findDOMNode(inputComponent).value).toBe('');
-
       });
-
     });
 
     context(`if the Todo isn't new (props.newTodo: false)`, () => {
 
-      it(`should call onSave after a blur action`, () => {
+      it(`should update a todo after a user clicks away`, () => {
         const onSaveStub = sinon.stub();
 
         const component = TestUtils.renderIntoDocument(
@@ -145,7 +142,6 @@ describe('TodoInput', () => {
 
         expect(onSaveStub.called).toBe(true);
       });
-
     });
 
   });

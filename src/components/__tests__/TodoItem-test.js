@@ -20,13 +20,13 @@ describe('TodoItem', () => {
         <TodoItem
           todo={mockedTodo}
           editTodo={_.noop}
-          toggleTodo={_.noop}
+          markTodoAsComplete={_.noop}
           deleteTodo={_.noop}
         />
       );
     });
 
-    it('should render li', () => {
+    it('should render the element', () => {
       const liComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'li');
 
       expect(liComponent).toExist();
@@ -45,17 +45,17 @@ describe('TodoItem', () => {
     let deleteTodoCallback = sinon.stub();
 
     beforeEach(() => {
-      component = TestUtils.renderIntoDocument(
+      const component = TestUtils.renderIntoDocument(
         <TodoItem
           todo={mockedTodo}
           editTodo={_.noop}
-          toggleTodo={_.noop}
+          markTodoAsComplete={_.noop}
           deleteTodo={deleteTodoCallback}
         />
       );
     });
 
-    it('should trigger deleteTodo', () => {
+    it(`should trigger deleteTodo if a user clicks on the delete button`, () => {
       const buttonComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'button');
 
       expect(deleteTodoCallback.called).toBe(false);
@@ -63,6 +63,20 @@ describe('TodoItem', () => {
       TestUtils.Simulate.click(React.findDOMNode(buttonComponent), 'click');
 
       expect(deleteTodoCallback.called).toBe(true);
+    });
+
+    it(`should change the editing state to be true if a user double-clicks
+        on the todo`, () => {
+
+      const inputComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
+
+      dump(inputComponent.props)
+
+      // expect(React.findDOMNode(inputComponent).value).toBe(mockedTodo.text);
+
+      // TestUtils.Simulate.change(React.findDOMNode(inputComponent), {target: {value: "newValue"}});
+
+      // expect(React.findDOMNode(inputComponent).value).toBe("newValue");
     });
   });
 

@@ -60,10 +60,10 @@ describe('reducers', () => {
         }]);
       }); //CREATE_TODO
 
-      it(`should update the state after a TOGGLE_TODO action with a todo that
-          has had its 'complete' flag toggled`, () => {
+      it(`should update the state after a MARK_TODO_AS_COMPLETE action with a todo that
+          has had its 'complete' flag markCompleted`, () => {
 
-        // It should toggle a given todo's complete flag from false to true by id
+        // It should markComplete a given todo's complete flag from false to true by id
 
         expect(
           reducer({
@@ -73,7 +73,7 @@ describe('reducers', () => {
                 id: 1
             }]
           }, {
-                type: types.TOGGLE_TODO,
+                type: types.MARK_TODO_AS_COMPLETE,
                 payload : {
                     id: 1
                 }
@@ -84,7 +84,7 @@ describe('reducers', () => {
             id: 1
         }]);
 
-        // It should toggle a given todo's complete flag from true to false by id
+        // It should markComplete a given todo's complete flag from true to false by id
 
         expect(
           reducer({
@@ -94,7 +94,7 @@ describe('reducers', () => {
                 id: 1
             }]
           }, {
-                type: types.TOGGLE_TODO,
+                type: types.MARK_TODO_AS_COMPLETE,
                 payload : {
                     id: 1
                 }
@@ -105,7 +105,7 @@ describe('reducers', () => {
             id: 1
         }]);
 
-      }); //TOGGLE_TODO
+      }); //MARK_TODO_AS_COMPLETE
 
      it(`should update the state after an EDIT_TODO action with a todo
          that has had its 'text' field updated`, () => {
@@ -132,8 +132,8 @@ describe('reducers', () => {
 
       }); //EDIT_TODO
 
-     it(`should update the state after a MARK_COMPLETE_ALL_TODOS action with
-         all 'complete' flags in all todos toggled to true`, () => {
+     it(`should update the state after a MARK_ALL_TODOS_AS_COMPLETE action with
+         all 'complete' flags in all todos markCompleted to true`, () => {
 
         expect(
           reducer({
@@ -148,7 +148,7 @@ describe('reducers', () => {
                 id: 2
             }]
           }, {
-                type: types.MARK_COMPLETE_ALL_TODOS,
+                type: types.MARK_ALL_TODOS_AS_COMPLETE,
           }).todos
         ).toEqual([{
                 text: 'Existing todo number one',
@@ -161,7 +161,7 @@ describe('reducers', () => {
                 id: 2
             }]);
 
-      }); //MARK_COMPLETE_ALL_TODOS
+      }); //MARK_ALL_TODOS_AS_COMPLETE
 
      it(`should update the state after a DELETE_TODO action with a given todo
          removed by id`, () => {
