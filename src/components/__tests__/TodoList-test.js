@@ -33,6 +33,10 @@ describe('TodoList', () => {
       );
     });
 
+    afterEach(() => {
+      React.unmountComponentAtNode(React.findDOMNode(component));
+    });
+
     it(`should render a 'section' element that wraps the component`, () => {
       const sectionComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'section');
 
@@ -58,6 +62,10 @@ describe('TodoList', () => {
           deleteTodo={onDeleteStub}
         />
       );
+    });
+
+    afterEach(() => {
+      React.unmountComponentAtNode(React.findDOMNode(component));
     });
 
     it('should trigger deleteTodo', () => {

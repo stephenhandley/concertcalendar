@@ -26,6 +26,10 @@ describe('TodoItem', () => {
       );
     });
 
+    afterEach(() => {
+      React.unmountComponentAtNode(React.findDOMNode(component));
+    });
+
     it('should render the element', () => {
       const liComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'li');
 
@@ -45,7 +49,7 @@ describe('TodoItem', () => {
     let deleteTodoCallback = sinon.stub();
 
     beforeEach(() => {
-      const component = TestUtils.renderIntoDocument(
+      component = TestUtils.renderIntoDocument(
         <TodoItem
           todo={mockedTodo}
           editTodo={_.noop}
@@ -53,6 +57,10 @@ describe('TodoItem', () => {
           deleteTodo={deleteTodoCallback}
         />
       );
+    });
+
+    afterEach(() => {
+      React.unmountComponentAtNode(React.findDOMNode(component));
     });
 
     it(`should trigger deleteTodo if a user clicks on the delete button`, () => {

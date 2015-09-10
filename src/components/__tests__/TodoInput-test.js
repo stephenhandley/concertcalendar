@@ -25,6 +25,10 @@ describe('TodoInput', () => {
       );
     });
 
+    afterEach(() => {
+      React.unmountComponentAtNode(React.findDOMNode(component));
+    });
+
     it(`should render an 'input' element that wraps the component`, () => {
       const inputComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
 
@@ -51,6 +55,8 @@ describe('TodoInput', () => {
       TestUtils.Simulate.change(React.findDOMNode(inputComponent), {target: {value: "newValue"}});
 
       expect(React.findDOMNode(inputComponent).value).toBe("newValue");
+
+      React.unmountComponentAtNode(React.findDOMNode(component));
     });
 
     it(`should update a todo after a user presses enter in the input`, () => {
@@ -72,6 +78,8 @@ describe('TodoInput', () => {
       TestUtils.Simulate.keyDown(React.findDOMNode(inputComponent), {keyCode: 13});
 
       expect(onSaveStub.called).toBe(true);
+
+      React.unmountComponentAtNode(React.findDOMNode(component));
     })
 
     context(`if the Todo is new (props.newTodo: true)`, () => {
@@ -95,6 +103,8 @@ describe('TodoInput', () => {
         TestUtils.Simulate.blur(React.findDOMNode(inputComponent));
 
         expect(onSaveStub.called).toBe(false);
+
+        React.unmountComponentAtNode(React.findDOMNode(component));
       });
 
       it(`should clear the input after pressing enter`, () => {
@@ -117,6 +127,8 @@ describe('TodoInput', () => {
         TestUtils.Simulate.keyDown(React.findDOMNode(inputComponent), {keyCode: 13});
 
         expect(React.findDOMNode(inputComponent).value).toBe('');
+
+        React.unmountComponentAtNode(React.findDOMNode(component));
       });
     });
 
@@ -141,6 +153,8 @@ describe('TodoInput', () => {
         TestUtils.Simulate.blur(React.findDOMNode(inputComponent));
 
         expect(onSaveStub.called).toBe(true);
+
+        React.unmountComponentAtNode(React.findDOMNode(component));
       });
     });
 
