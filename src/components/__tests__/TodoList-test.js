@@ -43,6 +43,13 @@ describe('TodoList', () => {
       expect(sectionComponent).toExist();
     });
 
+    it(`should render two list elements`, () => {
+      const liComponents = TestUtils.scryRenderedDOMComponentsWithTag(component, 'li');
+
+      expect(liComponents).toExist();
+      expect(liComponents.length).toEqual(2);
+    });
+
   });
 
   describe('events', () => {

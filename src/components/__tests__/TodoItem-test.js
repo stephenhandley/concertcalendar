@@ -1,9 +1,10 @@
-import React, { addons } from 'react/addons';
+import React, { Children, addons } from 'react/addons';
 import _ from 'lodash';
 import expect from 'expect';
 const { TestUtils } = addons;
 
 import TodoItem from '../TodoItem';
+import TodoInput from '../TodoInput';
 
 describe('TodoItem', () => {
 
@@ -76,16 +77,32 @@ describe('TodoItem', () => {
     it(`should change the editing state to be true if a user double-clicks
         on the todo`, () => {
 
-      const inputComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
+      const renderer = TestUtils.createRenderer();
+      renderer.render(
+        <TodoItem
+          todo={mockedTodo}
+          editTodo={_.noop}
+          markTodoAsComplete={_.noop}
+          deleteTodo={deleteTodoCallback}
+        />
+      );
 
-      dump(inputComponent.props)
+      let component = renderer.getRenderOutput();
+      let divComponent = Children.only(component.props.children);
 
-      // expect(React.findDOMNode(inputComponent).value).toBe(mockedTodo.text);
+      expect(component.type).toEqual('li');
+      expect(divComponent.type).toEqual('div');
 
-      // TestUtils.Simulate.change(React.findDOMNode(inputComponent), {target: {value: "newValue"}});
+      let labelComponent = divComponent.props.children[0];
+      labelComponent.props.onDoubleClick();
 
-      // expect(React.findDOMNode(inputComponent).value).toBe("newValue");
+      component = renderer.getRenderOutput();
+
+      let todoInputComponent = Children.only(component.props.children);
+
+      expect(todoInputComponent.type).toEqual(TodoInput);
     });
+
   });
 
 });
