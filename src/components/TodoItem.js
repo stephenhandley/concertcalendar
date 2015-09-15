@@ -48,7 +48,7 @@ export default class TodoItem extends Component {
           <label onDoubleClick={this.handleDoubleClick.bind(this)}>
             {todo.text}
           </label>
-          <input className='markComplete'
+          <input className='toggle'
                  type='checkbox'
                  checked={todo.complete}
                  onChange={() => markTodoAsComplete(todo)} />

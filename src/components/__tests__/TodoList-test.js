@@ -7,7 +7,7 @@ import TodoList from '../TodoList';
 
 describe('TodoList', () => {
 
-  const mockedTodos = [{
+  const mockedTodosVaried = [{
     text: 'abc123',
     complete: false,
     id: 1
@@ -18,36 +18,81 @@ describe('TodoList', () => {
     id: 2
   }];
 
+  const mockedTodosEmpty = []
 
   describe('rendering', () => {
     let component;
 
-    before(() => {
-      component = TestUtils.renderIntoDocument(
-        <TodoList
-          todos={mockedTodos}
-          editTodo={_.noop}
-          markTodoAsComplete={_.noop}
-          deleteTodo={_.noop}
-        />
-      );
+    context(`no todos`, ()=> {
+
+      before(() => {
+        component = TestUtils.renderIntoDocument(
+          <TodoList
+            todos={mockedTodosEmpty}
+            editTodo={_.noop}
+            markTodoAsComplete={_.noop}
+            markAllTodosAsComplete={_.noop}
+            deleteTodo={_.noop}
+          />
+        );
+      });
+
+      afterEach(() => {
+        React.unmountComponentAtNode(React.findDOMNode(component));
+      });
+
+      it(`should render a 'section' element that wraps the component`, () => {
+        const sectionComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'section');
+
+        expect(sectionComponent).toExist();
+      });
+
+      it(`should not yet render a checkbox element that allows the user to mark all items as complete`, () => {
+
+        const checkboxInputComponent = TestUtils.scryRenderedDOMComponentsWithClass(component, 'toggle-all')
+        expect(checkboxInputComponent.length).toEqual(0);
+      });
+
+
     });
 
-    afterEach(() => {
-      React.unmountComponentAtNode(React.findDOMNode(component));
-    });
+    context(`existing todos`, ()=> {
 
-    it(`should render a 'section' element that wraps the component`, () => {
-      const sectionComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'section');
+      before(() => {
+        component = TestUtils.renderIntoDocument(
+          <TodoList
+            todos={mockedTodosVaried}
+            editTodo={_.noop}
+            markTodoAsComplete={_.noop}
+            markAllTodosAsComplete={_.noop}
+            deleteTodo={_.noop}
+          />
+        );
+      });
 
-      expect(sectionComponent).toExist();
-    });
+      afterEach(() => {
+        React.unmountComponentAtNode(React.findDOMNode(component));
+      });
 
-    it(`should render two list elements`, () => {
-      const liComponents = TestUtils.scryRenderedDOMComponentsWithTag(component, 'li');
+      it(`should render a 'section' element that wraps the component`, () => {
+        const sectionComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'section');
 
-      expect(liComponents).toExist();
-      expect(liComponents.length).toEqual(2);
+        expect(sectionComponent).toExist();
+      });
+
+      it(`should render the correct number of list elements (${mockedTodosVaried.length})`, () => {
+        const liComponents = TestUtils.scryRenderedDOMComponentsWithTag(component, 'li');
+
+        expect(liComponents).toExist();
+        expect(liComponents.length).toEqual(mockedTodosVaried.length);
+      });
+
+      it(`should render a checkbox element that allows the user to mark all items as complete`, () => {
+
+        const checkboxInputComponent = TestUtils.findRenderedDOMComponentWithClass(component, 'toggle-all')
+        expect(checkboxInputComponent).toExist();
+      });
+
     });
 
   });
@@ -56,33 +101,57 @@ describe('TodoList', () => {
     let component;
 
     beforeEach(() => {
-      const onDeleteStub = sinon.stub();
-      const onEditStub = sinon.stub();
-      const onMarkCompleteStub = sinon.stub();
 
-      component = TestUtils.renderIntoDocument(
+      // V these weren't showing up in the context of the texts V
+      // const onDeleteStub = sinon.stub();
+      // const onEditStub = sinon.stub();
+      // const onMarkCompleteStub = sinon.stub();
+      // const onMarkAllTodosCompleteStub = sinon.stub();
 
-        <TodoList
-          todos={mockedTodos}
-          editTodo={onEditStub}
-          markTodoAsComplete={onMarkCompleteStub}
-          deleteTodo={onDeleteStub}
-        />
-      );
+      // component = TestUtils.renderIntoDocument(
+
+      //   <TodoList
+      //     todos={mockedTodosVaried}
+      //     editTodo={onEditStub}
+      //     markTodoAsComplete={onMarkCompleteStub}
+      //     markAllTodosAsComplete={onMarkAllTodosCompleteStub}
+      //     deleteTodo={onDeleteStub}
+      //   />
+      // );
     });
 
     afterEach(() => {
       React.unmountComponentAtNode(React.findDOMNode(component));
     });
 
-    it('should trigger deleteTodo', () => {
-      const buttonComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'button');
+    it(`should mark all todos as complete when the appropriate button
+        is clicked`, () => {
 
-      expect(onDeleteStub.called).toBe(false);
+      const onDeleteStub = sinon.stub();
+      const onEditStub = sinon.stub();
+      const onMarkCompleteStub = sinon.stub();
+      const onMarkAllTodosCompleteStub = sinon.stub();
 
-      TestUtils.Simulate.click(React.findDOMNode(buttonComponent), 'click');
+      component = TestUtils.renderIntoDocument(
 
-      expect(onDeleteStub.called).toBe(true);
+        <TodoList
+          todos={mockedTodosVaried}
+          editTodo={onEditStub}
+          markTodoAsComplete={onMarkCompleteStub}
+          markAllTodosAsComplete={onMarkAllTodosCompleteStub}
+          deleteTodo={onDeleteStub}
+        />
+      );
+
+      const checkboxInputComponent = TestUtils.findRenderedDOMComponentWithClass(component, 'toggle-all')
+
+      expect(checkboxInputComponent).toExist();
+      expect(onMarkAllTodosCompleteStub.called).toBe(false);
+
+      // v should this simulate a click explicitly? v
+      TestUtils.Simulate.change(checkboxInputComponent);
+
+      expect(onMarkAllTodosCompleteStub.called).toBe(true);
     });
   });
 

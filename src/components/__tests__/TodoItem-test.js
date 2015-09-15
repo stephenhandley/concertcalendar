@@ -13,7 +13,7 @@ describe('TodoItem', () => {
     complete: false
   };
 
-  describe('rendering', () => {
+  describe('initial rendering', () => {
     let component;
 
     before(() => {
@@ -37,7 +37,13 @@ describe('TodoItem', () => {
       expect(liComponent).toExist();
     });
 
-    it('should render text in label', () => {
+    it('should render the div with initial content ({editing = false})', () => {
+      const divComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'div');
+
+      expect(divComponent).toExist();
+    });
+
+    it('should render correct text in label', () => {
       const labelComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'label');
 
       expect(labelComponent).toExist();
@@ -47,15 +53,16 @@ describe('TodoItem', () => {
 
   describe('events', () => {
     let component;
-    let deleteTodoCallback = sinon.stub();
+    let deleteTodoStub = sinon.stub();
 
     beforeEach(() => {
+
       component = TestUtils.renderIntoDocument(
         <TodoItem
           todo={mockedTodo}
           editTodo={_.noop}
           markTodoAsComplete={_.noop}
-          deleteTodo={deleteTodoCallback}
+          deleteTodo={deleteTodoStub}
         />
       );
     });
@@ -65,16 +72,17 @@ describe('TodoItem', () => {
     });
 
     it(`should trigger deleteTodo if a user clicks on the delete button`, () => {
+
       const buttonComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'button');
 
-      expect(deleteTodoCallback.called).toBe(false);
+      expect(deleteTodoStub.called).toBe(false);
 
       TestUtils.Simulate.click(React.findDOMNode(buttonComponent), 'click');
 
-      expect(deleteTodoCallback.called).toBe(true);
+      expect(deleteTodoStub.called).toBe(true);
     });
 
-    it(`should change the editing state to be true if a user double-clicks
+    it(`should render a 'TodoInput' component if a user double-clicks
         on the todo`, () => {
 
       const renderer = TestUtils.createRenderer();
@@ -83,7 +91,7 @@ describe('TodoItem', () => {
           todo={mockedTodo}
           editTodo={_.noop}
           markTodoAsComplete={_.noop}
-          deleteTodo={deleteTodoCallback}
+          deleteTodo={deleteTodoStub}
         />
       );
 
@@ -94,13 +102,108 @@ describe('TodoItem', () => {
       expect(divComponent.type).toEqual('div');
 
       let labelComponent = divComponent.props.children[0];
+      // v Do you want to use a double-click event here? v
       labelComponent.props.onDoubleClick();
+
+      // TestUtils.Simulate.doubleClick(labelComponent); won't work...
 
       component = renderer.getRenderOutput();
 
       let todoInputComponent = Children.only(component.props.children);
 
       expect(todoInputComponent.type).toEqual(TodoInput);
+    });
+
+    context("editing state", ()=> {
+
+      it(`should delete the todo and reset the editing state (to {editing = false})
+          if a user sets the text length to be 0 and triggers save`, () => {
+
+        const renderer = TestUtils.createRenderer();
+        let deleteTodoStub = sinon.stub();
+
+        renderer.render(
+          <TodoItem
+            todo={mockedTodo}
+            editTodo={_.noop}
+            markTodoAsComplete={_.noop}
+            deleteTodo={deleteTodoStub}
+          />
+        );
+
+        // render the initial component and expect it to have a 'div' element
+        let component = renderer.getRenderOutput();
+        let divComponent = Children.only(component.props.children);
+        expect(component.type).toEqual('li');
+        expect(divComponent.type).toEqual('div');
+
+        let labelComponent = divComponent.props.children[0];
+
+        // call the double-click method on the 'label' component and expect
+        // the 'div' to be replaced with a 'TodoInput'
+        labelComponent.props.onDoubleClick();
+
+        component = renderer.getRenderOutput();
+        let todoInputComponent = Children.only(component.props.children);
+        expect(todoInputComponent.type).toEqual(TodoInput);
+        expect(deleteTodoStub.called).toBe(false);
+
+        // save an empty string and expect the todo to be deleted
+        // and for the 'TodoInput' component to be replaced by 'div'
+        todoInputComponent.props.onSave('')
+
+        expect(deleteTodoStub.called).toBe(true);
+
+        component = renderer.getRenderOutput();
+        expect(component.type).toEqual('li');
+        expect(divComponent.type).toEqual('div');
+
+      });
+
+      it(`should edit the todo and reset the editing state (to {editing = false})
+          if a user sets the text length to be greater than 0 and triggers save`, () => {
+
+        const renderer = TestUtils.createRenderer();
+        let editTodoStub = sinon.stub();
+
+        renderer.render(
+          <TodoItem
+            todo={mockedTodo}
+            editTodo={editTodoStub}
+            markTodoAsComplete={_.noop}
+            deleteTodo={_.noop}
+          />
+        );
+
+        // render the initial component and expect it to have a 'div' element
+        let component = renderer.getRenderOutput();
+        let divComponent = Children.only(component.props.children);
+        expect(component.type).toEqual('li');
+        expect(divComponent.type).toEqual('div');
+
+        let labelComponent = divComponent.props.children[0];
+
+        // call the double-click method on the 'label' component and expect
+        // the 'div' to be replaced with a 'TodoInput'
+        labelComponent.props.onDoubleClick();
+
+        component = renderer.getRenderOutput();
+        let todoInputComponent = Children.only(component.props.children);
+        expect(todoInputComponent.type).toEqual(TodoInput);
+        expect(editTodoStub.called).toBe(false);
+
+        // save an arbitrary string and expect the todo to be edited
+        // and for the 'TodoInput' component to be replaced by 'div'
+        todoInputComponent.props.onSave('abcbbd')
+
+        expect(editTodoStub.called).toBe(true);
+
+        component = renderer.getRenderOutput();
+        expect(component.type).toEqual('li');
+        expect(divComponent.type).toEqual('div');
+
+      });
+
     });
 
   });

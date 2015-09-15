@@ -5,6 +5,7 @@ import TodoItem from './TodoItem';
 export default class TodosList extends Component {
     static propTypes = {
       todos: PropTypes.array.isRequired,
+      markAllTodosAsComplete: PropTypes.func.isRequired,
       markTodoAsComplete: PropTypes.func.isRequired,
       editTodo: PropTypes.func.isRequired,
       deleteTodo: PropTypes.func.isRequired
@@ -28,7 +29,7 @@ export default class TodosList extends Component {
         if (todos.length > 0) {
 
           return (
-            <input className='markComplete-all'
+            <input className='toggle-all'
                    type='checkbox'
                    checked={completeCount === todos.length}
                    onChange={this.markAllTodosAsComplete.bind(this)} />
