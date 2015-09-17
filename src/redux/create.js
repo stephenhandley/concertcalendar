@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import createMiddleware from './clientMiddleware';
+import createMiddleware from './middleware/clientMiddleware';
 
 export default function createApiClientStore(client, data) {
   const middleware = createMiddleware(client);

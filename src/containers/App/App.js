@@ -3,7 +3,6 @@ import {Link} from 'react-router';
 import {bindActionCreators, createStore} from 'redux';
 import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
-import {createTransitionHook} from '../universalRouter';
 
 const title = 'React Redux TodoMVC Example';
 const description = 'All the modern best practices in one example.';
