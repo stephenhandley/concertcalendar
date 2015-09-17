@@ -25,7 +25,7 @@ export default class Footer extends Component {
     const itemWord = incompleteCount === 1 ? 'item' : 'items';
 
     return (
-      <span className='todo-count'>
+      <span className="todo-count">
         <strong>{incompleteCount || 'No'}</strong> {itemWord} left
       </span>
     );
@@ -48,7 +48,7 @@ export default class Footer extends Component {
     const { completeCount, deleteCompletedTodos } = this.props;
     if (completeCount > 0) {
       return (
-        <button className='clear-completed'
+        <button className="clear-completed"
                 onClick={deleteCompletedTodos} >
           Clear completed
         </button>
@@ -58,9 +58,9 @@ export default class Footer extends Component {
 
   render() {
     return (
-      <footer className='footer'>
+      <footer className="footer">
         {this.renderTodoCount()}
-        <ul className='filters'>
+        <ul className="filters">
           {[SHOW_ALL, SHOW_COMPLETE, SHOW_INCOMPLETE].map(filter =>
             <li key={filter}>
               {this.renderFilterLink(filter)}
