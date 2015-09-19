@@ -12,6 +12,7 @@ import universalRouter from './helpers/universalRouter';
 const history = new BrowserHistory();
 const client = new ApiClient();
 import 'todomvc-app-css/index.css';
+import SliderMonitor from 'redux-slider-monitor';
 
 const dest = document.getElementById('content');
 const store = createStore(client, window.__data);
@@ -22,7 +23,6 @@ universalRouter(location, history, store)
   .then(({component}) => {
     if (__DEVTOOLS__) {
       const { DevTools, DebugPanel, LogMonitor } = require('redux-devtools/lib/react');
-      import SliderMonitor from 'redux-slider-monitor';
       console.info('You will see a "Warning: React attempted to reuse markup in a container but the checksum was' +
         ' invalid." message. That\'s because the redux-devtools are enabled.');
       React.render(<div>

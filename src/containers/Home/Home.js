@@ -9,12 +9,14 @@ import Footer from '../../components/Footer';
 
 function selectTodos(todos, filter) {
   switch (filter) {
-  case VisibilityFilters.SHOW_ALL:
-    return todos;
-  case VisibilityFilters.SHOW_COMPLETE:
-    return todos.filter(todo => todo.complete);
-  case VisibilityFilters.SHOW_INCOMPLETE:
-    return todos.filter(todo => !todo.complete);
+    case VisibilityFilters.SHOW_ALL:
+      return todos;
+    case VisibilityFilters.SHOW_COMPLETE:
+      return todos.filter(todo => todo.complete);
+    case VisibilityFilters.SHOW_INCOMPLETE:
+      return todos.filter(todo => !todo.complete);
+    default:
+      return todos;
   }
 }
 
@@ -31,23 +33,24 @@ function select(state) {
 class Home extends Component {
 
   static propTypes = {
+    dispatch: PropTypes.func.isRequired,
     visibleTodos: PropTypes.arrayOf(PropTypes.shape({
-        text: PropTypes.string.isRequired,
-        completed: PropTypes.bool.isRequired
-      })),
+      text: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired
+    })),
     visibilityFilter: PropTypes.oneOf([
-        'SHOW_ALL',
-        'SHOW_COMPLETED',
-        'SHOW_ACTIVE'
-      ]).isRequired
+      'SHOW_ALL',
+      'SHOW_COMPLETED',
+      'SHOW_ACTIVE'
+    ]).isRequired
   }
 
   render() {
     const { dispatch, visibleTodos, visibilityFilter} = this.props;
     const incompleteCount = visibleTodos.filter(todo => !todo.complete).length;
-    const completeCount = visibleTodos.filter(todo => todo.complete).length
+    const completeCount = visibleTodos.filter(todo => todo.complete).length;
 
-    let boundActions = bindActionCreators(TodoActions, dispatch);
+    const boundActions = bindActionCreators(TodoActions, dispatch);
     const {
       deleteTodo,
       deleteCompletedTodos,
@@ -61,7 +64,7 @@ class Home extends Component {
     return (
       <div className="todoapp">
         <Header
-          placeholder='What is to be done?'
+          placeholder="What is to be done?"
           createTodo={createTodo}
         />
         <TodoList

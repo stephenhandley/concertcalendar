@@ -13,29 +13,29 @@ export default class TodosList extends Component {
 
     markTodoAsComplete(todo) {
         this.props.markTodoAsComplete(todo.id);
-    }
+      }
 
     deleteTodo(todo) {
         this.props.deleteTodo(todo.id);
-    }
+      }
 
     markAllTodosAsComplete() {
         this.props.markAllTodosAsComplete();
-    }
+      }
 
     renderMarkCompleteAll(completeCount) {
-        const { todos, actions } = this.props;
+        const { todos } = this.props;
 
         if (todos.length > 0) {
 
           return (
-            <input className='toggle-all'
-                   type='checkbox'
+            <input className="toggle-all"
+                   type="checkbox"
                    checked={completeCount === todos.length}
                    onChange={this.markAllTodosAsComplete.bind(this)} />
           );
         }
-    }
+      }
 
   render() {
     const { todos } = this.props;
@@ -45,10 +45,10 @@ export default class TodosList extends Component {
     );
 
     return (
-        <section className='main'>
+        <section className="main">
             {this.renderMarkCompleteAll(completeCount)}
             <ul className="todo-list">
-              {this.props.todos.map((todo, index) => <TodoItem
+              {this.props.todos.map((todo) => <TodoItem
                 todo={todo}
                 key={todo.id}
                 markTodoAsComplete={this.markTodoAsComplete.bind(this, todo)}
@@ -57,6 +57,6 @@ export default class TodosList extends Component {
                 />)}
             </ul>
         </section>
-    )
+    );
   }
 }

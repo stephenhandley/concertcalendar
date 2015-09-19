@@ -7,17 +7,17 @@ import {
   EDIT_TODO,
   SET_VISIBILITY_FILTER,
   MARK_ALL_TODOS_AS_COMPLETE
-} from "./actionTypes";
+} from './actionTypes';
 
 export function createTodo(text) {
     return {
-        type: CREATE_TODO,
-        payload: {
-          text,
-          id: lodash.uniqueId()
-        }
-    }
-}
+      type: CREATE_TODO,
+      payload: {
+        text,
+        id: lodash.uniqueId()
+      }
+    };
+  }
 
 export function markTodoAsComplete(id) {
   return {
@@ -34,7 +34,7 @@ export function markAllTodosAsComplete() {
   };
 }
 
-export function deleteTodo (id) {
+export function deleteTodo(id) {
   return {
     type: DELETE_TODO,
     payload: {
@@ -49,7 +49,7 @@ export function deleteCompletedTodos() {
   };
 }
 
-export function editTodo (id, content) {
+export function editTodo(id, content) {
   return {
     type: EDIT_TODO,
     payload: {

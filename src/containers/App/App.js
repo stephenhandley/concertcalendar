@@ -1,7 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import {Link} from 'react-router';
-import {bindActionCreators, createStore} from 'redux';
-import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
 const title = 'React Redux TodoMVC Example';
@@ -33,9 +30,13 @@ const meta = {
 
 export default class App extends Component {
 
+  static propTypes = {
+    children: PropTypes.object.isRequired
+  }
+
   static contextTypes = {
     router: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
   };
 
   render() {
