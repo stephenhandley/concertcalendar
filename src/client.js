@@ -11,7 +11,7 @@ import ApiClient from './helpers/ApiClient';
 import universalRouter from './helpers/universalRouter';
 const history = new BrowserHistory();
 const client = new ApiClient();
-import 'todomvc-app-css/index.css';
+require('todomvc-app-css/index.css');
 import SliderMonitor from 'redux-slider-monitor';
 
 const dest = document.getElementById('content');
