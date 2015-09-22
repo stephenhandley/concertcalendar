@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import createMiddleware from './clientMiddleware';
+import createMiddleware from './middleware/clientMiddleware';
 
 export default function createApiClientStore(client, data) {
   const middleware = createMiddleware(client);
@@ -9,7 +9,8 @@ export default function createApiClientStore(client, data) {
     finalCreateStore = compose(
       applyMiddleware(middleware),
       devTools(),
-      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
+      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+    )(
       createStore
     );
   } else {

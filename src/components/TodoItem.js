@@ -44,15 +44,15 @@ export default class TodoItem extends Component {
       );
     } else {
       element = (
-        <div className='view'>
+        <div className="view">
           <label onDoubleClick={this.handleDoubleClick.bind(this)}>
             {todo.text}
           </label>
-          <input className='toggle'
-                 type='checkbox'
+          <input className="toggle"
+                 type="checkbox"
                  checked={todo.complete}
                  onChange={() => markTodoAsComplete(todo)} />
-          <button className='destroy'
+          <button className="destroy"
                   onClick={() => deleteTodo(todo)} />
         </div>
       );
@@ -65,6 +65,6 @@ export default class TodoItem extends Component {
       })}>
         {element}
       </li>
-    )
+    );
   }
 }

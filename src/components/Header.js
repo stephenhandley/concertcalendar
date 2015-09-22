@@ -11,11 +11,12 @@ export default class Header extends Component {
   render() {
 
     return (
-      <header className='header'>
+      <header className="header">
         <h1>todos</h1>
-        <TodoInput placeholder={this.props.placeholder}
+        <TodoInput
+          placeholder={this.props.placeholder}
           onSave={this.props.createTodo}
-          newTodo={true}
+          newTodo
         />
       </header>
     );

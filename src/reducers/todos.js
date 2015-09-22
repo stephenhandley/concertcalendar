@@ -12,10 +12,10 @@ const { SHOW_ALL } = VisibilityFilters;
 
 function visibilityFilter(state = SHOW_ALL, action) {
   switch (action.type) {
-  case SET_VISIBILITY_FILTER:
-    return action.filter;
-  default:
-    return state;
+    case SET_VISIBILITY_FILTER:
+      return action.filter;
+    default:
+      return state;
   }
 }
 
@@ -32,10 +32,10 @@ function todos(state = [], action) {
       }];
 
     case MARK_TODO_AS_COMPLETE: {
-      let index = state.findIndex(todo => action.payload.id === todo.id);
+      const index = state.findIndex(todo => action.payload.id === todo.id);
 
-      let todo = state[index];
-      let completeStatus = !todo.complete;
+      const todo = state[index];
+      const completeStatus = !todo.complete;
 
       return [
         ...state.slice(0, index),
@@ -43,24 +43,24 @@ function todos(state = [], action) {
           complete: completeStatus
         }),
         ...state.slice(index + 1)
-      ]
+      ];
     }
     case EDIT_TODO: {
-      let index = state.findIndex(todo => action.payload.id === todo.id);
+      const index = state.findIndex(todo => action.payload.id === todo.id);
       return [
         ...state.slice(0, index),
         Object.assign({}, state[index], {
           text: action.payload.content
         }),
         ...state.slice(index + 1)
-      ]
+      ];
     }
     case MARK_ALL_TODOS_AS_COMPLETE:
       const allAreComplete = state.every(todo => todo.complete);
       return [...state.map(todo => ({...todo, complete: !allAreComplete }))];
 
     case DELETE_TODO:
-      return [...state.filter(todo => action.payload.id != todo.id)];
+      return [...state.filter(todo => action.payload.id !== todo.id)];
 
     case DELETE_COMPLETED_TODOS:
       return [...state.filter(todo=> todo.complete === false)];

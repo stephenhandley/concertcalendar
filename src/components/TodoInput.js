@@ -41,11 +41,11 @@ export default class TodoInput extends Component {
   render() {
 
     return (
-      <input type="text" autoFocus='true'
+      <input type="text" autoFocus="true"
             className={classnames({
               edit: this.props.editing,
               'new-todo': this.props.newTodo
-             })}
+            })}
             value={this.state.text}
             placeholder={this.props.placeholder}
             onKeyDown={this.handleKeyDown.bind(this)}
