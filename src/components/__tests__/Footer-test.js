@@ -34,8 +34,7 @@ describe('Footer', () => {
                     React.unmountComponentAtNode(React.findDOMNode(component));
                 });
 
-
-                //vv should we also test to see if a component renders completely?.. vv
+                // This is the base case, so we test to make sure that rendering is complete.
                 it(`should render a 'footer' element that wraps the component`, () => {
                     const footerComponent = TestUtils.findRenderedDOMComponentWithTag(component, 'footer');
 

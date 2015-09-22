@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 import TodoList from '../../components/TodoList';
 import Footer from '../../components/Footer';
 
-function selectTodos(todos, filter) {
+export function selectTodos(todos, filter) {
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
       return todos;

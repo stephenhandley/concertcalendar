@@ -102,10 +102,7 @@ describe('TodoItem', () => {
       expect(divComponent.type).toEqual('div');
 
       let labelComponent = divComponent.props.children[0];
-      // v Do you want to use a double-click event here? v
       labelComponent.props.onDoubleClick();
-
-      // TestUtils.Simulate.doubleClick(labelComponent); won't work...
 
       component = renderer.getRenderOutput();
 
