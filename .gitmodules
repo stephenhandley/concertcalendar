@@ -1,0 +1,4 @@
+[submodule "examples/todo-mvc"]
+	path = examples/todo-mvc
+	url = https://github.com/aaronazlant/react-redux-universal-hot-example.git
+	branch = todo-mvc
